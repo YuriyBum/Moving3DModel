@@ -104,7 +104,6 @@ requestAnimationFrame(updateFPS);
   // You can put your custom code here to react to the changes
   console.log(camera.position);
   console.log(camera.rotation);
-  console.log(camera.focus);
 }); */
 
 function initCameraPosition(aDefaultConfig: camObject) {
@@ -170,6 +169,10 @@ export function ShowElements() {
   });
 }
 
+function animateModel (child) {
+  child.rotation.y += 0.001;
+}
+
 
 const Model3D = () => {
   const [clickable, setClickable] = useState(false);
@@ -190,56 +193,11 @@ const Model3D = () => {
           defaultMaterials.set(child.name, child.material);
         }
 
-        if (child.name !== "Sphere001") {
-          // child.visible = false;
-
-          /* let material = new THREE.l({
-            color: 0x00ff00,
-            size: 0.2,
-          }); */
-
-          /* let points = new THREE.Mesh(child.geometry, child.material);
-          points.translateZ(counter * 50)
-          points.translateY(counter * 50)
-          points.translateX(counter * 50)
-          points.name = child.name + "_mesh" */
-
-          // scene.add(points);
-          interactionManager.add(child);
-          child.addEventListener("click", (event: any) => {
-            if (menuHidden) {
-              HideMenu(false);
-            } else {
-              HideMenu(true);
-            }
-            SetHeading(event.target ? event.target.name : "Default")
-          })
-        }
-
-        if (child.name.indexOf(config.inactiveNameSelector) === -1) {
-          interactionManager.add(child);
-
-          child.addEventListener("click", (event: any) => {
-            if (child.name === "Sphere001") {
-              if (menuHidden) {
-                HideMenu(false);
-              } else {
-                HideMenu(true);
-              }
-            }
-          });
-
-          child.addEventListener("mouseover", (event: any) => {
-            document.body.style.cursor = "pointer";
-          });
-
-          child.addEventListener("mouseout", (event: any) => {
-            document.body.style.cursor = "default";
-            /* if (child.material.emissive) {
-                child.material.emissive.setHex(0x000000);  
-              } */
-          });
-        }
+          child.visible = true;
+          camera.lookAt(child.position)
+          setInterval(() => {
+            animateModel(child)
+          }, 10)
       }
       counter++
     });

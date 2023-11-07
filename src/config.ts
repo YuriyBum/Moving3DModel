@@ -1,6 +1,6 @@
 import { camObject, pointVector } from "./types";
 
-export const url: string = "model/jupiter.glb";
+export const url: string = "model/galaxy.glb";
 
 export const inactiveNameSelector: string = "inactive";
 
